@@ -1,26 +1,24 @@
-<!-- ## BAC Calculation Formula
-The BAC is calculated using the Widmark formula:
-
-BAC = (Alcohol Consumed (grams) * 5.14) / (Weight (lbs) * Gender Constant) - 0.015 * Time Elapsed (hours)
-Where:
-- **Alcohol Consumed** is the total amount of alcohol consumed in grams.
-- **Gender Constant** is 0.73 for males and 0.66 for females. -->
 <?php
+//fetching data from form
 $alcohol_content = $_POST['alcohol_content'];
+$drinks = $_POST['drinks'];
 $weight = $_POST['weight'];
-$gender = $_POST['gender'];
 $time_elapsed = $_POST['time_elapsed'];
 
+//setting gender_constant value for two genders
+if ($_POST['gender'] == "male") {
+    $gender_constant = 0.73;
+} else {
+    $gender_constant = 0.66;
+}
+// recalculating weight if unit is kg
+if ($_POST['unit'] == "kg") {
+    $weight *= 2.20;
+}
 
 
+//calculating BAC
+$BAC = ($alcohol_content * $drinks * 5.14) / ($weight * $gender_constant) - 0.015 * $time_elapsed;
 
-
-
-
-
-
-
-
-
-
-?>
+//redirectig to main page along with a variable
+header("Location:/?data=$BAC");
